@@ -1,18 +1,30 @@
 #!/bin/bash
 
-# This script will run Starfish in a Docker container and enables Starfish to use
-# a GUI from within the container
-# Works only on Linux OS‘s using X11
-
-xhost +local:root # Allows programs in the docker container to display GUIs on the host machine
-
+# --- Configuration ---
+# Set the name of the Docker image to run
 CONTAINER='starfish'
 
+# Set the path to the Xauthority file for authentication
+XAUTH_FILE=~/.Xauthority
+
+
+# --- Preparation ---
+# Ensure the .Xauthority file exists on the host.
+# This prevents Docker from creating an empty directory if the file is missing.
+echo "Ensuring authentication file exists at ${XAUTH_FILE}..."
+touch "${XAUTH_FILE}"
+
+
+# --- Run the Container ---
+echo "Starting container '${CONTAINER}' using the host's network..."
 docker run -ti --rm \
-        -e _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=lcd -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel' \
-        -e DISPLAY=$DISPLAY \
-        -v /tmp/.X11-unix:/tmp/.X11-unix \
-        -v /usr/share/fonts:/usr/share/fonts:ro \
-        --security-opt label=type:container_runtime_t \
-        --network=host \
-        "${CONTAINER}"
+    --network=host \
+    -e _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=lcd -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel' \
+    -e DISPLAY=$DISPLAY \
+    -e XAUTHORITY=/root/.Xauthority \
+    -v "${XAUTH_FILE}":/root/.Xauthority:ro \
+    -v /tmp/.X11-unix:/tmp/.X11-unix \
+    -v /usr/share/fonts:/usr/share/fonts:ro \
+    "${CONTAINER}"
+
+echo "Container exited."
