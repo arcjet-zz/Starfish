@@ -230,7 +230,7 @@ public class MCC extends VolumeInteraction
     		dn_target = this.target.getDeltaNCollection();
     }
 	
-    static abstract class MCCModel 
+    public static abstract class MCCModel 
     {
 	/**returns cross-section for the given relative velocity*/
 	public abstract void perform(Particle source, Particle target, MCC mcc, Mesh mesh);
