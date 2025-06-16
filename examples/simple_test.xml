@@ -1,0 +1,120 @@
+<?xml version="1.0"?>
+<simulation>
+    <note>Simple test simulation for Python GUI</note>
+    
+    <!-- Logging configuration -->
+    <log level="Log" />
+    
+    <!-- Domain definition -->
+    <domain type="xy">
+        <mesh type="uniform" name="mesh1">
+            <origin>0,0</origin>
+            <spacing>0.01,0.01</spacing>
+            <nodes>51,51</nodes>
+        </mesh>
+    </domain>
+    
+    <!-- Materials definition -->
+    <materials>
+        <material name="O+" type="kinetic">
+            <charge>1</charge>
+            <mass>16</mass>
+        </material>
+        
+        <material name="e-" type="kinetic">
+            <charge>-1</charge>
+            <mass>1</mass>
+        </material>
+    </materials>
+    
+    <!-- Boundary conditions -->
+    <boundaries>
+        <boundary name="inlet" type="dirichlet">
+            <value>0</value>
+            <path>
+                <point>0,0</point>
+                <point>0,0.5</point>
+            </path>
+        </boundary>
+
+        <boundary name="outlet" type="dirichlet">
+            <value>0</value>
+            <path>
+                <point>0.5,0</point>
+                <point>0.5,0.5</point>
+            </path>
+        </boundary>
+
+        <boundary name="walls" type="neumann">
+            <value>0</value>
+            <path>
+                <point>0,0</point>
+                <point>0.5,0</point>
+                <point>0.5,0.5</point>
+                <point>0,0.5</point>
+                <point>0,0</point>
+            </path>
+        </boundary>
+    </boundaries>
+    
+    <!-- Sources -->
+    <sources>
+        <source name="plasma_source" type="volume">
+            <material>O+</material>
+            <rate>1e15</rate>
+            <temperature>1.5</temperature>
+            <region>
+                <box>
+                    <min>0.1,0.1</min>
+                    <max>0.4,0.4</max>
+                </box>
+            </region>
+        </source>
+
+        <source name="electron_source" type="volume">
+            <material>e-</material>
+            <rate>1e15</rate>
+            <temperature>1.5</temperature>
+            <region>
+                <box>
+                    <min>0.1,0.1</min>
+                    <max>0.4,0.4</max>
+                </box>
+            </region>
+        </source>
+    </sources>
+    
+    <!-- Solver configuration -->
+    <solver type="poisson">
+        <method>gs</method>
+        <n0>1e10</n0>
+        <Te0>1.5</Te0>
+        <phi0>0</phi0>
+        <max_it>5000</max_it>
+        <tolerance>1e-6</tolerance>
+    </solver>
+    
+    <!-- Time parameters -->
+    <time>
+        <num_it>100</num_it>
+        <dt>1e-6</dt>
+    </time>
+    
+    <!-- Run simulation -->
+    <starfish />
+    
+    <!-- Output configuration -->
+    <output type="2D" file_name="results/field.vts" format="vtk">
+        <scalars>phi, rho, nd.O+, nd.e-</scalars>
+        <vectors>[efi, efj]</vectors>
+    </output>
+    
+    <output type="1D" file_name="results/profile.dat" format="vtk">
+        <mesh>mesh1</mesh>
+        <index>J=25</index>
+        <scalars>phi, rho, nd.O+</scalars>
+    </output>
+    
+    <output type="boundaries" file_name="results/boundaries.vtp" format="vtk" />
+    
+</simulation>

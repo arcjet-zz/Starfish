@@ -31,10 +31,12 @@
 </output>
 </animation>
 
+<!-- particle_trace disabled due to configuration issues
 <particle_trace file_name="results/trace.vtp" format="vtk" material="ar+">
-<id>400</id>
+<random_ids>400</random_ids>
 <start_it>0</start_it>
 </particle_trace>
+-->
 
 <!-- set time parameters 5e-8-->
 <time>

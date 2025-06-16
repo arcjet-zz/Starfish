@@ -5,7 +5,7 @@
 <load>domain.xml</load>
 <load>materials.xml</load>
 <load>boundaries.xml</load>
-<load>interactions2.xml</load>
+<load>interactions.xml</load>
 
 <!-- set potential solver -->
 <solver type="poisson">
