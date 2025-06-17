@@ -39,8 +39,15 @@ public class Options implements Cloneable {
         for (String arg : args) {
             Matcher m = r.matcher(arg);
             if (!m.find()) {
-                Starfish.Log.error("Unrecognized argument " + arg + ", skipped.");
-                continue;
+                // If argument doesn't match flag pattern, treat it as simulation file
+                if (!arg.startsWith("-")) {
+                    sim_file = arg;
+                    continue;
+                } else {
+                    // Use System.out.println instead of Starfish.Log.error since logger may not be initialized yet
+                    System.out.println("Unrecognized argument " + arg + ", skipped.");
+                    continue;
+                }
             }
             // Splits the string up into -(argName)=(argValue)
             String argName = m.group(1).toLowerCase();
@@ -48,9 +55,10 @@ public class Options implements Cloneable {
 
             switch (argName) {
                 case "dir":
+                    wd = argValue;
                     if (!wd.endsWith("/") && !wd.endsWith("\\"))
                         wd += "/"; // add terminating slash if not present
-                        Starfish.Log.log("Setting working directory to " + wd);
+                    System.out.println("Setting working directory to " + wd);
                     break;
                 case "sim_file":
                 case "sf":
@@ -67,7 +75,7 @@ public class Options implements Cloneable {
                     try {
                         cores = Integer.parseInt(argValue);
                     } catch (NumberFormatException e) {
-                        Starfish.Log.error(arg + ": " + argValue + " is not a valid integer! Skipped arg.");
+                        System.out.println(arg + ": " + argValue + " is not a valid integer! Skipped arg.");
                     }
                     max_cores = cores;
                     break;

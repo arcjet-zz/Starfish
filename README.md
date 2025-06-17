@@ -104,12 +104,22 @@ pip install vtk
 
 #### "StarfishCLI.jar not found"
 - Download from [Releases](https://github.com/particleincell/Starfish/releases)
-- Or build from source (see below)
+- Or build from source using `buildHeadless.bat` (Windows) or `buildHeadless.sh` (Linux/macOS)
+
+#### "jar command not found" (Windows)
+- Install Java JDK (not just JRE) from [Oracle](https://www.oracle.com/java/technologies/downloads/)
+- The build script will automatically locate jar.exe in common installation paths
+- Alternatively, set JAVA_HOME environment variable
+
+#### "javac not found"
+- Install Java JDK (Development Kit), not just JRE (Runtime Environment)
+- Verify installation: `javac -version`
 
 #### Simulation Ends Immediately
 - Use recommended test files: `dat/examples/tutorial/step1/starfish.xml`
 - Avoid `interactions.xml` and other config fragments
 - Check for `particle_trace` configuration errors
+- Ensure you're running from the correct directory with all required XML files
 
 ## 🏗 Building StarfishCLI.jar
 
@@ -117,7 +127,26 @@ pip install vtk
 - Java Development Kit (JDK) 8 or higher
 - All source files in `src/` directory
 
-### Build Steps
+### Windows (Recommended)
+Use the automated build script:
+```batch
+.\buildHeadless.bat
+```
+
+This script will:
+- ✅ Check Java installation (JDK required)
+- ✅ Automatically find jar.exe even if not in PATH
+- ✅ Remove GUI components for headless operation
+- ✅ Compile all Java sources
+- ✅ Create optimized JAR file (~1.4MB)
+- ✅ Provide detailed error messages and troubleshooting
+
+### Linux/macOS
+```bash
+./buildHeadless.sh
+```
+
+### Manual Build Steps
 ```bash
 # 1. Create build directory
 mkdir build
@@ -140,12 +169,16 @@ mv StarfishCLI.jar ../
 1. Import `src/` as Java project in your IDE
 2. Set main class to `starfish.MainHeadless`
 3. Build JAR with dependencies
-4. Ensure manifest specifies `Main-Class: starfish.Main`
+4. Ensure manifest specifies `Main-Class: starfish.MainHeadless`
 
 ### Verification
 ```bash
-java -jar StarfishCLI.jar
+java -jar starfish.jar
 # Should display Starfish version and usage information
+
+# Test with example simulation
+cd dat/examples/tutorial/step1
+java -jar ../../../../starfish.jar starfish.xml
 ```
 
 ## 📖 Examples
@@ -172,6 +205,7 @@ Copyright © 2012-2024 Particle In Cell Consulting LLC
 
 ## 🔄 Recent Updates
 
+- **v0.27.1**: Fixed Windows build script (`buildHeadless.bat`) - automatic jar.exe detection, improved error handling, and resolved NullPointerException in Options class
 - **v0.27**: Fixed VTK visualization issues - proper color mapping, live simulation viewing, and adaptive camera for different domain sizes
 - **v0.25**: Python GUI implementation with VTK visualization
 - **v0.24**: Magnetostatic and Geng generalized Ohm's law solver
