@@ -67,10 +67,11 @@ See [Building StarfishCLI.jar](#building-starfishclijar) section below.
 - Pause/resume/stop controls
 
 ### 📊 Result Viewer
-- VTK-based 3D visualization
-- Multiple field display (phi, rho, nd.O+, etc.)
+- VTK-based 3D visualization with proper 2D camera setup
+- Multiple field display (phi, rho, nd.O+, efi, etc.)
+- Live simulation viewing with "Show Current Sim" feature
 - Customizable colormaps and animation support
-- Auto-refresh during simulation
+- Auto-refresh during simulation with optimal view bounds
 
 ## 📁 File Types Guide
 
@@ -171,6 +172,7 @@ Copyright © 2012-2024 Particle In Cell Consulting LLC
 
 ## 🔄 Recent Updates
 
+- **v0.26**: Fixed VTK visualization issues - proper color mapping, live simulation viewing, and adaptive camera for different domain sizes
 - **v0.25**: Python GUI implementation with VTK visualization
 - **v0.24**: Magnetostatic and Geng generalized Ohm's law solver
 - **v0.22**: Multi-mesh support, command line arguments, trace rewrite

@@ -91,3 +91,16 @@ nbproject/private/private.properties
 nbproject/private/private.properties
 /bin/
 /.idea
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+.env
