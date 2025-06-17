@@ -172,7 +172,7 @@ Copyright © 2012-2024 Particle In Cell Consulting LLC
 
 ## 🔄 Recent Updates
 
-- **v0.26**: Fixed VTK visualization issues - proper color mapping, live simulation viewing, and adaptive camera for different domain sizes
+- **v0.27**: Fixed VTK visualization issues - proper color mapping, live simulation viewing, and adaptive camera for different domain sizes
 - **v0.25**: Python GUI implementation with VTK visualization
 - **v0.24**: Magnetostatic and Geng generalized Ohm's law solver
 - **v0.22**: Multi-mesh support, command line arguments, trace rewrite
