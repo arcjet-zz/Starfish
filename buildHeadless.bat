@@ -27,7 +27,7 @@ echo Building Starfish CLI JAR file...
 echo ========================================
 
 REM Configuration
-set JAR_FILE=starfish.jar
+set JAR_FILE=starfishCLI.jar
 set SOURCE_DIR=src
 set MAIN_CLASS=starfish.MainHeadless
 set TMP_DIR=tmp
